@@ -60,5 +60,10 @@ class User < ActiveRecord::Base
     tr.method_name_singular = 'translated_gender'
     tr.method_name_plural = 'translated_genders'
   end
+  
+  # Or even provide your own logic
+  def self.translated_gender(key)
+    I18n.t(key, scope: 'global.gender_list')
+  end
 end
 ```
