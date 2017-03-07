@@ -42,17 +42,17 @@ Post.translated_statuses => [["Was published", :published, 0], ["Was achieved", 
 @post.translated_status #=> "Was published"
 ```
 
-## Extending ActiveRecord
-
-Be default you should extend each `ActiveRecord` model manually by including `TranslateEnum` module in it.
-You can extend `ActiveRecord` by requiring `translate_enum/active_record` in initializer or inside yout `Gemfile`:
-
 ### Use in a Form
 
 ```haml
 = form_for @post do |f|
   = f.select :status, options_for_select(f.object.translated_statuses.map { |translation, k, _v| [translation, k] })
 ```
+
+## Extending ActiveRecord
+
+Be default you should extend each `ActiveRecord` model manually by including `TranslateEnum` module in it.
+You can extend `ActiveRecord` by requiring `translate_enum/active_record` in initializer or inside yout `Gemfile`:
 
 Gemfile:
 
