@@ -3,9 +3,9 @@ require 'active_support/core_ext/string'
 require 'translate_enum/version'
 require 'translate_enum/builder'
 
-#
 module TranslateEnum
   extend ActiveSupport::Concern
+
   # include TranslateEnum in ActiveModel or ActiveRecord
   module ClassMethods
     # @example
@@ -15,7 +15,7 @@ module TranslateEnum
     #     translate_enum :status
     #   end
     #
-    #   User.translated_status(:active) #=> "Активный"
+    #   User.translated_status(:active) #=> "Active translation"
     def translate_enum(attribute, &block)
       builder = Builder.new(self, attribute, &block)
 

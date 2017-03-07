@@ -11,7 +11,7 @@ Simple, zero-dependant `enum` translation gem for Rails
 
 ## Usage
 
-Here is a simple demonstration. ActiveRecord model:
+Here is a regular use case. ActiveRecord model:
 
 ```ruby
 class Post < ActiveRecord::Base
@@ -26,7 +26,7 @@ Localization file
 
 ```yaml
 en:
-  activemodel:
+  activerecord:
     attributes:
       post:
         status_list:
@@ -40,6 +40,24 @@ Post.translated_statuses => [["Was published", :published, 0], ["Was achieved", 
 
 @post = Post.new(status: :published)
 @post.translated_status #=> "Was published"
+```
+
+## Extending ActiveRecord
+
+Be default you should extend each `ActiveRecord` model manually by including `TranslateEnum` module in it.
+You can extend `ActiveRecord` by requiring `translate_enum/active_record` in initializer or inside yout `Gemfile`:
+
+Gemfile:
+
+```ruby
+gem 'translate_enum', require: 'translate_enum/active_record'
+```
+
+Initializer:
+
+```ruby
+# config/initializers/translate_enum.rb
+require 'translate_enum/active_record'
 ```
 
 ### Use in a Form
