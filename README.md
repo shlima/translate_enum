@@ -14,7 +14,7 @@ Here is a simple demonstration. ActiveRecord model:
 class Post < ActiveRecord::Base
   include TranslateEnum
   
-  enum status: {published: 0, archive: 1}
+  enum status: { published: 0, archive: 1 }
   translate_enum :status
 end
 ```
