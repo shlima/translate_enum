@@ -31,12 +31,12 @@ en:
       post:
         status_list:
           published: Was published
-          archive: Was achieved
+          archive: Was archived
 ```
 
 ```ruby
 Post.translated_status(:published) #=> "Was published"
-Post.translated_statuses => [["Was published", :published, 0], ["Was achieved", :archive, 1]]
+Post.translated_statuses => [["Was published", :published, 0], ["Was archived", :archive, 1]]
 
 @post = Post.new(status: :published)
 @post.translated_status #=> "Was published"
