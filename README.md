@@ -46,7 +46,7 @@ Post.translated_statuses => [["Was published", :published, 0], ["Was archived", 
 
 ```haml
 = form_for @post do |f|
-  = f.select :status, options_for_select(f.object.translated_statuses.map { |translation, k, _v| [translation, k] })
+  = f.select :status, options_for_select(f.object.class.translated_statuses.map { |translation, k, _v| [translation, k] })
 ```
 
 ## Extending ActiveRecord
