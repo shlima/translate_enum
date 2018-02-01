@@ -21,7 +21,7 @@ module TranslateEnum
 
       # User.translated_status(:active)
       define_singleton_method(builder.method_name_singular) do |key|
-        I18n.translate(builder.i18n_location(key), scope: builder.i18n_scope)
+        I18n.translate("#{builder.i18n_scope}.#{builder.i18n_location(key)}", default: builder.i18n_default_location(key))
       end
 
       # @return [Array]
