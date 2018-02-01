@@ -26,6 +26,35 @@ RSpec.describe TranslateEnum do
     model.new
   end
 
+  context 'default' do
+    let(:model) do
+      Class.new(model_base) do
+        translate_enum :gender
+      end
+    end
+
+    let(:translations) do
+      {
+        male: 'I am a default of the male',
+        female: 'Female (not default)'
+      }
+    end
+
+    before do
+      I18n.backend.store_translations(:en, attributes: { gender_list: { male: translations.fetch(:male) } })
+      I18n.backend.store_translations(:en, activemodel: { attributes: { model: { gender_list: { female: translations.fetch(:female) } } } })
+    end
+
+    after do
+      I18n.reload!
+    end
+
+    it 'uses default path as a fallback' do
+      expect(model.translated_gender(:male)).to eq(translations.fetch(:male))
+      expect(model.translated_gender(:female)).to eq(translations.fetch(:female))
+    end
+  end
+
   context 'default options' do
     let(:model) do
       Class.new(model_base) do

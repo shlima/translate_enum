@@ -32,6 +32,10 @@ module TranslateEnum
       "#{model.model_name.i18n_key}.#{i18n_key}.#{key}"
     end
 
+    def i18n_default_location(key)
+      :"attributes.#{i18n_key}.#{key}"
+    end
+
     # @param [String]
     # like "translated_genders"
     def method_name_plural

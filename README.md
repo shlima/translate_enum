@@ -34,6 +34,16 @@ en:
           archive: Was archived
 ```
 
+Or if you wish your locales to be available across all models
+
+```yaml
+en:
+  attributes:
+    status_list:
+      published: Was published
+      archive: Was archived
+```
+
 ```ruby
 Post.translated_status(:published) #=> "Was published"
 Post.translated_statuses => [["Was published", :published, 0], ["Was archived", :archive, 1]]
