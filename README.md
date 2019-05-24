@@ -98,3 +98,71 @@ class User < ActiveRecord::Base
   end
 end
 ```
+# How To?
+## How use translate enum in serializer 
+
+Example for Grape:
+
+```ruby
+class Feedback < ApplicationRecord
+  include TranslateEnum
+  
+  enum topic: {
+    question: 'question', issue: 'issue', complaint: 'complaint', offer: 'offer',
+    investment: 'investment'
+  }
+
+  translate_enum :topic
+end
+```
+
+```ruby
+class FeedbacksApi < Grape::API
+  resource :feedbacks do
+    get 'enums' do
+      present Feedback.method(:translated_topics), with: TranslateEnumSerializer
+    end
+  end
+end
+```
+
+```ruby
+class TranslateEnumSerializer < Grape::Entity
+  expose :enum, as: ->(method) { method.name[/translated_(.*)/, 1] } do |method|
+    method.call.map do |translation, key, _value|
+      { value: key, translation: translation }
+    end
+  end
+end
+```
+
+```bash
+curl http://localhost:3000/feedbacks/enums
+```
+
+```json
+{
+  "topics": [
+    {
+      "value": "question",
+      "translation": "Vopros"
+    },
+    {
+      "value": "issue",
+      "translation": "Problema"
+    },
+    {
+      "value": "complaint",
+      "translation": "Zhaloba"
+    },
+    {
+      "value": "offer",
+      "translation": "Predlozhenie"
+    },
+    {
+      "value": "investment",
+      "translation": "Invisticii"
+    }
+  ]
+}
+```
