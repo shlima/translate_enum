@@ -2,6 +2,7 @@ require 'active_support/concern'
 require 'active_support/core_ext/string'
 require 'translate_enum/version'
 require 'translate_enum/builder'
+require 'translate_enum/config'
 
 module TranslateEnum
   extend ActiveSupport::Concern

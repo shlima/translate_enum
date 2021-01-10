@@ -21,7 +21,7 @@ module TranslateEnum
 
     # like "activerecord.attributes" or "activemodel.attributes"
     def i18n_scope
-      @i18n_scope ||= "#{model.i18n_scope}.attributes"
+      @i18n_scope ||= TranslateEnum.config.i18n_scope || "#{model.i18n_scope}.attributes"
     end
 
     def i18n_key
