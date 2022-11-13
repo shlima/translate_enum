@@ -51,7 +51,9 @@ Post.translated_statuses => [["Was published", :published, 0], ["Was archived", 
 @post = Post.new(status: :published)
 @post.translated_status #=> "Was published"
 
-# Each `translated` methods supports I18n.translate attributes except key:
+# Each `translated` method supports 
+# I18n.translate attributes:
+
 Post.translated_status(:published, raise: true, throw: true, locale: :en, count: 10)
 ```
 
@@ -102,7 +104,7 @@ class User < ActiveRecord::Base
 end
 ```
 # How To?
-## How use pluralization
+## How to use pluralization
 ```yaml
 en:
   activerecord:
