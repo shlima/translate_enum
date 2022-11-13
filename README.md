@@ -50,6 +50,9 @@ Post.translated_statuses => [["Was published", :published, 0], ["Was archived", 
 
 @post = Post.new(status: :published)
 @post.translated_status #=> "Was published"
+
+# Each `translated` methods supports I18n.translate attributes except key:
+Post.translated_status(:published, raise: true, throw: true, locale: :en, count: 10)
 ```
 
 ### Use in a Form
@@ -99,6 +102,30 @@ class User < ActiveRecord::Base
 end
 ```
 # How To?
+## How use pluralization
+```yaml
+en:
+  activerecord:
+    attributes:
+      person:
+        gender_list:
+          male: 
+            zero: No males
+            one: One male
+            other: %{count} males
+            
+```
+
+```ruby
+Person.translated_gender(:make, count: 0) #=> "No males"
+Person.translated_genders => [["One male", :male, 0]] # and others
+Person.translated_genders(count: 0) => [["No males", :male, 0]] # and others
+
+@person = Person.new(gender: :male)
+@person.translated_gender #=> "One male"
+@person.translated_gender(count: 10) #=> "10 Males"
+```
+
 ## How use translate enum in serializer 
 
 Example for Grape:

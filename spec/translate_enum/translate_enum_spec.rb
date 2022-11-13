@@ -156,7 +156,7 @@ RSpec.describe TranslateEnum do
       Class.new(model_base) do
         translate_enum :gender
 
-        def self.translated_gender(key)
+        def self.translated_gender(key, **options)
           "foo_bar_#{key}"
         end
       end
@@ -164,6 +164,61 @@ RSpec.describe TranslateEnum do
 
     it 'returns redefined value' do
       expect(subject.translated_gender).to eq('foo_bar_male')
+    end
+  end
+
+  context 'count' do
+    let(:model) do
+      Class.new(model_base) do
+        translate_enum :gender
+      end
+    end
+
+    let(:translations) do
+      {
+        male: {
+          zero: 'no males',
+          one: 'one male',
+          other: '%{count} males'
+        }
+      }
+    end
+
+    before do
+      I18n.backend.store_translations(:en, activemodel: { attributes: { model: {  gender_list: translations } } } )
+    end
+
+    after do
+      I18n.reload!
+    end
+
+    it 'uses count' do
+      expect(model.translated_gender(:male, count: 0)).to eq('no males')
+      expect(model.translated_gender(:male, count: 1)).to eq('one male')
+      expect(model.translated_gender(:male, count: 3)).to eq('3 males')
+
+      expect(subject.translated_gender(count: 0)).to eq('no males')
+      expect(subject.translated_gender(count: 1)).to eq('one male')
+      expect(subject.translated_gender(count: 3)).to eq('3 males')
+      expect(subject.translated_gender).to eq('one male')
+
+      expect(subject.translated_gender).to eq('one male')
+      expect(model.translated_genders.to_s).to include('one male')
+    end
+  end
+
+  context 'trow' do
+    let(:model) do
+      Class.new(model_base) do
+        translate_enum :gender
+      end
+    end
+
+
+    it 'it works' do
+      expect { model.translated_gender(:male, raise: true) }.to raise_error(I18n::MissingTranslationData)
+      expect { model.translated_genders(raise: true) }.to raise_error(I18n::MissingTranslationData)
+      expect { subject.translated_gender(raise: true) }.to raise_error(I18n::MissingTranslationData)
     end
   end
 end

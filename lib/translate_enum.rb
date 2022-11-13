@@ -22,25 +22,29 @@ module TranslateEnum
       builder = Builder.new(self, attribute, &block)
 
       # User.translated_status(:active)
-      define_singleton_method(builder.method_name_singular) do |key|
-        I18n.translate("#{builder.i18n_scope}.#{builder.i18n_location(key)}", default: builder.i18n_default_location(key))
+      define_singleton_method(builder.method_name_singular) do |key, throw: false, raise: false, locale: nil, **options|
+        opts = { default: builder.i18n_default_location(key) }.merge(options)
+        I18n.translate("#{builder.i18n_scope}.#{builder.i18n_location(key)}", throw: throw, raise: raise, locale: locale, **opts)
       end
 
       # @return [Array]
       # @example
       #   f.select_field :gender, f.object.class.translated_genders
-      define_singleton_method(builder.method_name_plural) do
+      define_singleton_method(builder.method_name_plural) do |throw: false, raise: false, locale: nil, **options|
+        options = { count: 1 }.merge(options)
         public_send(builder.enum_klass_method_name).map do |key, value|
-          [public_send(builder.method_name_singular, key), key, value]
+          translation = public_send(builder.method_name_singular, key, throw: throw, raise: raise, locale: locale, **options)
+          [translation, key, value]
         end
       end
 
       # @return [String]
       # @example
       #   @user.translated_gender
-      define_method(builder.method_name_singular) do
+      define_method(builder.method_name_singular) do |throw: false, raise: false, locale: nil, **options|
         if (key = public_send(builder.enum_instance_method_name)).present?
-          self.class.public_send(builder.method_name_singular, key)
+          options = { count: 1 }.merge(options)
+          self.class.public_send(builder.method_name_singular, key, throw: throw, raise: raise, locale: locale, **options)
         end
       end
     end
