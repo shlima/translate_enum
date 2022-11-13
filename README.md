@@ -1,5 +1,6 @@
 ![CI](https://github.com/shlima/translate_enum/workflows/CI/badge.svg)
 [![Code Climate](https://codeclimate.com/github/shlima/translate_enum/badges/gpa.svg)](https://codeclimate.com/github/shlima/translate_enum)
+[![gem version](https://badge.fury.io/rb/health_bit.svg)](https://rubygems.org/gems/translate_enum)
 
 # TranslateEnum
 
