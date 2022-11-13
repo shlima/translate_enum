@@ -1,4 +1,4 @@
-[![Build Status](https://semaphoreci.com/api/v1/shlima/translate_enum/branches/master/shields_badge.svg)](https://semaphoreci.com/shlima/translate_enum)
+![CI](https://github.com/shlima/translate_enum/workflows/CI/badge.svg)
 [![Code Climate](https://codeclimate.com/github/shlima/translate_enum/badges/gpa.svg)](https://codeclimate.com/github/shlima/translate_enum)
 
 # TranslateEnum

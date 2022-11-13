@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TranslateEnum
   class Builder
     attr_accessor :i18n_scope
